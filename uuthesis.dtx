@@ -1,0 +1,818 @@
+% \iffalse meta-comment
+%
+% Copyright (c) 2014 Andreas Sandberg
+% -----------------------------------
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are
+% met: redistributions of source code must retain the above copyright
+% notice, this list of conditions and the following disclaimer;
+% redistributions in binary form must reproduce the above copyright
+% notice, this list of conditions and the following disclaimer in the
+% documentation and/or other materials provided with the distribution;
+% neither the name of the copyright holders nor the names of its
+% contributors may be used to endorse or promote products derived from
+% this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+% A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+% OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+% SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+% LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+% DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+% THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+% OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+%
+% \fi
+%
+% \iffalse
+%
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{uuthesis}
+%<class>  [2014/03/17 v0.1 Unofficial class file for Uppsala University Theses]
+%
+%<berling|gill|gillbook|gillheavy|gilllight>\ProvidesFile%
+%<berling>{berling.fontspec}[2014/03/17 v0.1 UU Thesis Berling font specification]
+%<gill>{gillaltonemt.fontspec}[2014/03/17 v0.1 UU Thesis Gill Sans font specification]
+%<gillbook>{gillaltonemtbook.fontspec}[2014/03/17 v0.1 UU Thesis Gill Sans font specification]
+%<gillheavy>{gillaltonemtheavy.fontspec}[2014/03/17 v0.1 UU Thesis Gill Sans font specification]
+%<gilllight>{gillaltonemtlight.fontspec}[2014/03/17 v0.1 UU Thesis Gill Sans font specification]
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[numbered]{hypdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+
+\begin{document}
+\ifx\LuaTeX\undefined
+\newcommand{\LuaLaTeX}{Lua\LaTeX}
+\newcommand{\LuaTeX}{Lua\TeX}
+\fi
+
+\newcommand{\DescribeOpt}{\DescribeMacro}
+\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%
+% \fi
+%
+% \CheckSum{0}
+%
+%
+% \changes{v0.1}{2014/03/17}{First public release}
+%
+% \GetFileInfo{\jobname.cls}
+%
+% \title{^^A
+% The Unofficial Uppsala University Thesis Class\\
+% --
+% Version \fileversion}
+% \author{^^A
+%   Andreas Sandberg\\ \texttt{andreas@sandberg.pp.se}^^A
+% }
+% \date{\filedate}
+% \maketitle
+%
+% \section{Introduction}
+% This is the unofficial Uppsala University thesis class for
+% \LaTeX. Unlike the official class, this class builds on the
+% excellent |memoir| class. The main purpose of this class is to
+% provide a non-intrusive layer around memoir to setup the same (or
+% sometimes a similar) layout as in the official template.
+%
+% In addition to the features provided by |memoir|, this class
+% provides some helper environment that simplifies tasks related to
+% theses writing. While the main focus has been on so called
+% comprehensive summaries, the class should be usable for monographs
+% as well.
+%
+% \section{Usage}
+%
+% Load the class just like any other \LaTeX{} class. That is, put the
+% following in your preamble:
+% \begin{quote}
+%   |\documentclass[<|\textit{options}|>]{uuthesis}|
+% \end{quote}
+%
+% \section{Class Options}
+% \subsection{Style Options}
+% The following options describe how the thesis is rendered. They
+% control features such as layout and font selection. The default
+% layout and font selection tries to adhere to the official thesis
+% template.
+%
+%
+% \DescribeOpt{altfonts}%
+% Use Uppsala University's profile fonts (Berling \& Gill Sans). These
+% need to be installed separately.
+%
+% \DescribeOpt{air}%
+% Use a non-standard layout with bigger baseline skips.
+%
+% \subsection{Production Options}
+% The following options control features that are useful when creating
+% drafts and pre-prints of a thesis using a normal office printer.
+%
+% \DescribeOpt{trim}%
+% Trim the paper to S5. Activating this option disables trim
+% marks and sets up a crop box around the resulting S5 page to cause
+% PDF readers to display the crop the generated A4 pages to S5. The
+% resulting PDF will contain the same bleed box and trim box
+% irregardless of this option.
+%
+% \DescribeOpt{final}%
+% Configure the class for print output. This disables debug features
+% such as overfull hbox rules. The option will be passed to |memoir|.
+%
+% \DescribeOpt{draft}%
+% Setup features usable for draft production. Currently disables
+% trimming and causes overfull rules to be display.
+%
+%
+% \section{Environments}
+%
+% \DescribeEnv{dedication}%
+% Typeset a dedication page. The text within the environment will be
+% set in italics.
+%
+% \DescribeEnv{placeholderpage}%
+% Create a placeholder page with the text within the environment.
+%
+%
+% \section{Bibliographies}
+% This class uses the |biblatex| package to typeset
+% bibliographies. This provides some functionality that allows
+% separate bibliographies in different papers in a comprehensive
+% summary. See the |biblatex| manual for more information.
+%
+% \section{Typesetting Paper Lists}
+% \DescribeEnv{paperlist}%
+% \DescribeMacro{paper}%
+% A comprehensive summary normally contains a list of papers. This
+% class contains provides a simple way of typesetting such a list. The
+% macro |\paper| is defined within the environment. Calling this macro
+% causes a bibliography entry to be printed. The macro takes cite key
+% and an optional participation as its arguments: \\
+% |\paper|~\marg{cite~key}~\oarg{participation}
+%
+% \subsection{Typesetting Papers in Comprehensive Summaries}
+% \DescribeEnv{abstract}%
+% The abstract environment is primarily indented to be used when
+% typesetting papers. However, it is frequently used to typeset the
+% abstract placeholder page.
+%
+% \DescribeMacro{\papers}%
+% At the end of the comprehensive summary, the |\papers| command is
+% use to shift to paper production. This changes the chapter style and
+% to produce paper front pages.
+%
+% \DescribeMacro{\paper}%
+% Once the chapter style has been changed with the |\papers| command,
+% a paper heading can be created using the |\paper| macro. This macro
+% should be called as follows:\\
+% |\paper|~\marg{title}~\marg{short~title}~\marg{authors}~\marg{copyright}
+%
+% \subsection{Installing Fonts}
+% Download the university's font package from the university
+% website. Make sure to download the PC version. The file should be
+% called something like |18350_TypeSnitt_PC.zip|.
+%
+% Copy the directories |Berling PS| and |Gill PS| to your thesis
+% directory. \LuaLaTeX{} should now be able to find the font files.
+%
+%
+%\StopEventually{^^A
+%  \PrintChanges
+%  \PrintIndex
+%}
+%
+% \section{Implementation}
+%\iffalse
+%<*class>      
+% \fi
+%
+% \subsection{Option Handling}
+%  \begin{macro}{\ifuut@overfullrule}
+%    Highlight overfull hboxes. Default:~|true|.
+%    \begin{macrocode}
+\newif\ifuut@overfullrule\uut@overfullruletrue
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\ifuut@trimmed}
+% \begin{macro}{\iftrimmed}
+%   Trim page (show trim marks otherwise). This is exported as
+%   |\iftrimmed|. Default:~|false|.
+%    \begin{macrocode}
+\newif\ifuut@trimmed\uut@trimmedfalse
+\def\iftrimmed{\ifuut@trimmed}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% 
+% \begin{macro}{\ifuut@altfonts}
+%   Use CMR instead of Berling/Gill Sans. Default:~|false|
+%    \begin{macrocode}
+\newif\ifuut@altfonts\uut@altfontsfalse
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ifuut@air}
+%   Use a non-standard layout that does not look as crowded as the
+%   official layout. Default:~|false|
+%    \begin{macrocode}
+\newif\ifuut@air\uut@airfalse
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\DeclareOption{final}{
+  \PassOptionsToClass{\CurrentOption}{memoir}
+  \uut@overfullrulefalse
+}
+
+\DeclareOption{draft}{
+  \PassOptionsToClass{\CurrentOption}{memoir}
+  \uut@overfullruletrue
+  \uut@trimmedfalse
+}
+
+\DeclareOption{trim}{
+  \uut@trimmedtrue
+}
+
+\DeclareOption{altfonts}{
+  \uut@altfontstrue
+}
+
+\DeclareOption{air}{
+  \uut@airtrue
+}
+
+\DeclareOption*{
+  \ClassWarning{uuthesis}{Unknown option '\CurrentOption'}
+}
+%    \end{macrocode}
+%
+% Process the options and setup memoir.
+%    \begin{macrocode}
+\ProcessOptions\relax
+
+\iftrimmed
+\else
+  \PassOptionsToClass{showtrims}{memoir}
+\fi
+
+\LoadClass[11pt,twoside,onecolumn]{memoir}
+%    \end{macrocode}
+%
+% \begin{macro}{\ifuut@lualatex}
+%   We need to check for \LuaLaTeX{} for some features, create a macro
+%   that does that.
+%    \begin{macrocode}
+\newif\ifuut@lualatex
+\ifx\directlua\uut@undefined
+\uut@lualatexfalse
+\else
+\uut@lualatextrue
+\fi
+%    \end{macrocode}
+% \end{macro}
+%
+% Check that options are sane and load additional packages.
+% 
+%    \begin{macrocode}
+%      
+\RequirePackage{graphics}
+\ifuut@lualatex
+\RequirePackage{fontspec}
+\RequirePackage{luatexbase,luacode}
+\fi
+
+% Switch to CMR if we aren't using lualatex (i.e., can't use fontspec)
+\ifuut@lualatex
+\else
+\ifuut@altfonts
+\ClassError{uuthesis}{%
+  Can not use alternative fonts unless LuaLaTeX is used.%
+}{%
+  Render the document using lualatex.
+}%
+\fi
+\uut@altfontsfalse
+\fi
+%    \end{macrocode}
+%
+% \subsection{Setup Page Layout}
+%
+% Override baseline skip to get something that resembles the official
+% class.
+%    \begin{macrocode}
+% 
+\ifuut@air
+\newcommand{\uut@baselineskip@normal}{13.2pt}
+\else
+\newcommand{\uut@baselineskip@normal}{13.0pt}
+\fi
+
+\let\uut@old@normalsize\normalsize%
+\renewcommand\normalsize{%
+  \uut@old@normalsize%
+  \@setfontsize{\normalsize}{11pt}{\uut@baselineskip@normal}%
+}%
+\normalsize
+%    \end{macrocode}
+%
+% Setup paper size. We only support S5 printed on A4 at the moment.
+%
+%    \begin{macrocode}
+\stockaiv % 210x297 (595.28bp x 841.89bp)
+\settrims{27.5mm}{22.5mm}
+\settrimmedsize{242mm}{165mm}{*}
+%    \end{macrocode}
+%
+% Setup type block and margins. The official typeblock is normally
+% 572pt high, but we adjust it slightly since we use 11pt topskip
+% instead of 13pt to maintain a 43 line type block. 
+%
+%    \begin{macrocode}
+\ifuut@air
+\settypeblocksize{565.4pt}{120mm}{*}
+\else
+\settypeblocksize{570pt}{120mm}{*}
+\fi
+\setlrmargins{22.5mm}{*}{*}
+\setulmargins{18mm}{*}{*}
+\setheaderspaces{*}{\onelineskip}{*}
+\setheadfoot{\onelineskip}{26pt}
+\setmarginnotes{1mm}{20mm}{5pt}
+\checkandfixthelayout
+%    \end{macrocode}
+%
+% Setup PDF metadata to let the print shop know where to trim the page
+% (|TrimBox|) and how much bleed to print (|BleedBox|). Set the
+% |CropBox| as well to make the PDF reader only display the trimmed
+% page if the |trimmed| option has been passed to the class.
+%
+%    \begin{macrocode}
+\iftrimmed%
+\newcommand{\uut@setuppdfbox}{
+  \pdfpageattr{
+    /MediaBox [0 0 595.28 841.89]
+    /BleedBox [51.78 65.955 543.50 775.93]
+    /TrimBox [63.78 77.955 531.50 763.93]
+    /CropBox [63.78 77.955 531.50 763.93]
+  }%
+}
+\else%
+\quarkmarks
+\newcommand{\uut@setuppdfbox}{
+  \pdfpageattr{
+    /MediaBox [0 0 595.28 841.89]
+    /BleedBox [51.78 65.955 543.50 775.93]
+    /TrimBox [63.78 77.955 531.50 763.93]
+  }%
+}
+\fi%
+
+\AtBeginDocument{%
+  \ifx \hyper@@anchor \undefined%
+  \else%
+  \uut@setuppdfbox
+  \fi%
+}%
+%    \end{macrocode}
+%
+% \subsection{Setup Fonts}
+% \begin{macro}{\uut@font@sec}
+% \begin{macro}{\uut@font@chapter}
+%   Setup font macros for sections and chapters based on the font
+%   requested.
+%    \begin{macrocode}
+\ifuut@altfonts
+\defaultfontfeatures{
+  Ligatures = {TeX},
+}
+
+\setmainfont{Berling}
+\setsansfont{GillAltOneMT}
+
+\newfontface\uut@font@sec{GillAltOneMTHeavy}
+\newfontface\uut@font@chapter{GillAltOneMTHeavy}
+\else
+\newcommand{\uut@font@sec}{\bfseries\sffamily}
+\newcommand{\uut@font@chapter}{\bfseries\sffamily}
+\fi
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Draft Debug}
+% 
+% \subsubsection{Overfull hbox printing}
+% The following code sets up printing of overfull hbox margin
+% markers. The main point of this code is to highlight them in color
+% when using \LuaLaTeX.
+%
+%    \begin{macrocode}
+\ifuut@overfullrule
+\overfullrule 5pt
+
+\ifuut@lualatex
+% Kudos to topskip on tex.stackexchange.com.
+\begin{luacode}
+magentabox = function(head)
+  while head do
+    if head.id == 0 or head.id == 1 then
+      -- go through the hlists (the rows)
+      magentabox(head.head)
+
+    -- if there's a rule after the rightskip, this is the overfull box
+    -- node id 10 == glue, glue subtype 9 is rightskip, node id 2 is a rule
+
+    elseif head.id == 10 and head.subtype == 9 and head.next and head.next.id == 2 then
+       -- this must be an overfull box
+       local w1, w2
+       w1 = node.new("whatsit","pdf_literal")
+       w1.data = "q 1 0 1 rg"
+       w1.mode = 1
+       w2 = node.new("whatsit","pdf_literal")
+       w2.data = " Q"
+       w2.mode = 1
+
+       w1.next = head.next -- the rule
+       head.next = w1      -- color start
+       w1.next.next = w2   -- color end
+
+       node.slide(head)    -- adjust prev pointers
+    end
+    head = head.next
+  end
+  return true
+end
+luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
+\end{luacode}
+\fi %lualatex
+
+\fi %uut@overfullrule
+%    \end{macrocode}
+% 
+% \subsection{Page Style}
+%
+% \begin{macro}{\uut@addsuffix}
+%   Helper macro that concatenates two parameters. This can be used to
+%   append a string to the next to a parameter following the
+%   macro invocation.
+% \begin{macrocode}
+\newcommand{\uut@addsuffix}[2]{#2#1}
+% \end{macrocode}
+% \end{macro}
+% 
+% \subsubsection{Main Page Style}
+% \begin{macro}{\ps@uut}
+%   Declare the default thesis page style.
+%    \begin{macrocode}
+\makepagestyle{uut} \makeevenfoot{uut}{\thepage}{}{}
+\makeoddfoot{uut}{}{}{\thepage}
+%    \end{macrocode}
+
+% \end{macro}
+%    % 
+% Setup aliases for the page style to ensure that it gets used
+% consistently throughout the thesis.
+%    \begin{macrocode}
+\aliaspagestyle{part}{uut}
+\aliaspagestyle{book}{uut}
+\aliaspagestyle{chapter}{uut}
+%    \end{macrocode}
+%
+% 
+% \begin{macro}{\chs@uut}
+%   Create a default chapter style that resembles the official chapter
+%   style.
+%    \begin{macrocode}
+\makechapterstyle{uut}{%
+  \chapterstyle{section}
+  \renewcommand*{\chaptitlefont}{\sffamily\Huge}
+  \renewcommand*{\chapnumfont}{\chaptitlefont}
+  \renewcommand*{\printchaptertitle}[1]{\chaptitlefont ##1}
+  \renewcommand{\afterchapternum}{\hspace{12pt}}
+  \setlength{\beforechapskip}{-\baselineskip}
+  \setlength{\afterchapskip}{80pt}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\hds@uut}
+%    \begin{macrocode}
+\newcommand{\uut@secstyle}{\uut@font@sec\raggedright}
+\makeheadstyles{uut}{%
+  \setsecheadstyle{\fontsec\Large}%
+  \setsubsecheadstyle{\fontsec\large}%
+  %
+  % chapter
+  \chapterstyle{uut}%
+  %
+  % section
+  \setsecheadstyle{\uut@secstyle\Large}%
+  %
+  % subsection
+  \setsubsecheadstyle{\uut@secstyle\large}%
+  %
+  % subsubsection
+  \setsubsubsecheadstyle{\uut@secstyle\normalsize}%
+  %
+  % paragraph
+  \setparaheadstyle{\normalfont\normalsize\bfseries\uut@addsuffix{:
+    }}%
+  \setparaindent{\parindent}%
+  \setbeforeparaskip{0ex}%
+  \setafterparaskip{0em}%
+}%
+%    \end{macrocode}
+% \end{macro}
+%
+% Enable the thesis page style and header style by default.
+%    \begin{macrocode}
+\pagestyle{uut}
+\headstyles{uut}
+%    \end{macrocode}
+%
+% \subsubsection{Placeholder Pages}
+% Define the placeholder page style.
+%    \begin{macrocode}
+\def\uut@placeholdertext{{\large\textmd{PLACEHOLDER --- REPLACE FOR PRINT}}}
+\makepagestyle{placeholder}
+\makeevenfoot{placeholder}{}{\uut@placeholdertext}{}
+\makeoddfoot{placeholder}{}{\uut@placeholdertext}{}
+\makeevenhead{placeholder}{}{\uut@placeholdertext}{}
+\makeoddhead{placeholder}{}{\uut@placeholdertext}{}
+%    \end{macrocode}
+%
+%
+% \begin{environment}{placeholderpage}
+%    Define an environment that creates a placeholder page.
+%    \begin{macrocode}
+\newenvironment{placeholderpage}{
+  \begingroup
+  \thispagestyle{placeholder}
+}{
+  \endgroup
+  \newpage
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Dedication Page}
+% \begin{environment}{dedication}
+%    \begin{macrocode}
+\newenvironment{dedication}{
+  \begingroup
+  \cleartorecto
+  \thispagestyle{empty}
+  \vspace*{\stretch{3}}%
+  \flushright
+  \itshape\Large%
+}{
+  \endflushright
+  \vspace*{\stretch{1}}%
+  \endgroup
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Typesetting Paper Lists}
+%
+% \begin{environment}{paperlist}
+% \begin{macro}{paper}
+%   Put explanation of |paperlist|'s implementation here.
+%
+%    \begin{macrocode}
+\newenvironment{paperlist}{
+  \begingroup
+  % We need to use sloppy spacing to avoid major ugliness when setting
+  % the bibliography entries.
+  \midsloppy
+  % Define a paper macro that is only valid in the paperlist. The
+  % paper macro takes two parameters, the name of the paper in the
+  % bibliography and comments on participation.
+  \def\paper##1##2{%
+    \item \fullcite{##1}%
+      \notblank{##2}{%
+        \begingroup%
+        \fussy
+        \itshape%
+        \smallskip\\%
+        ##2
+        \endgroup%
+      }{}
+  } %
+  \enumerate
+  \renewcommand{\labelenumi}{\Roman{enumi}.~}
+}{%
+  \endenumerate
+  \endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{environment}
+%
+%
+% \subsection{Typesetting Papers}
+% \begin{macro}{\papers}
+% Put explanation of |\papers|'s implementation here.
+% \begin{macrocode}
+\newcommand{\papers}{%
+  \chapterstyle{paper}
+  \openright
+  \setsecnumdepth{section}
+  \renewcommand\thesection{\arabic{section}}
+  \renewcommand\thefigure{\arabic{figure}}
+  \renewcommand\thetable{\arabic{table}}
+}
+% \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\paper}
+%   Typeset a paper front page.
+%
+%    \begin{macrocode}
+\newcommand{\paper}[4]{%
+  \cleartorecto
+  \stepcounter{paper}
+  \chapter[#1][#2]{#1}
+  \addtocounter{paper}{-1}
+  \refstepcounter{paper}
+  \vskip 24pt
+  % Authors
+  {%
+    \begin{center}%
+      \noindent\Large #3%
+    \end{center}%
+  }
+  \vfill
+  % Copyright
+  {\raggedright\noindent\textsf{\footnotesize #4}}
+  \thispagestyle{afterpart}
+  \newpage
+  % Start a new reference section if biblatex is loaded.
+  \ifx\newrefsection\uut@undefined
+  \else
+  \newrefsection
+  \fi
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\chs@paper}
+% \begin{macro}{\c@paper}
+% \begin{macro}{\thepaper}
+% \begin{macro}{\papername}
+%    \begin{macrocode}
+% Chapter style for papers.
+%
+% Setup a paper counter so we can reference the paper later.
+\newcounter{paper}
+\renewcommand{\thepaper}{\Roman{paper}}
+\newcommand{\papername}{Paper}
+% Monkey patch a Swedish translation
+\AtBeginDocument{%
+  \ifx \captionsswedish \undefined%
+  \else%
+  \g@addto@macro\captionsswedish{%
+    \def\papername{Artikel}%
+  }%
+  \fi%
+}%
+% Define the actual paper style
+\makechapterstyle{paper}{%
+  \renewcommand*{\chaptername}{Paper}
+  \renewcommand*{\thechapter}{\Roman{paper}}
+
+  \setlength{\afterchapskip}{40pt}
+  \renewcommand*{\chapterheadstart}{\vspace*{20pt}}
+  \renewcommand*{\afterchapternum}{\par\nobreak\vskip 25pt}
+  \renewcommand*{\chapnamefont}{\sffamily\LARGE\flushright}
+  \renewcommand*{\chapnumfont}{\sffamily\HUGE}
+  \renewcommand*{\chaptitlefont}{\uut@font@chapter\HUGE\flushright}
+  \renewcommand*{\printchaptername}{\chapnamefont\MakeUppercase{\chaptername}}
+  \renewcommand*{\chapternamenum}{}
+  \setlength{\beforechapskip}{24pt}
+  \setlength{\midchapskip}{\paperwidth}
+  \addtolength{\midchapskip}{-\textwidth}
+  \addtolength{\midchapskip}{-\spinemargin}
+  \renewcommand*{\printchapternum}{%
+    \makebox[0pt][l]{%
+      \hspace{.8em}%
+      \resizebox{!}{\beforechapskip}{\chapnumfont \thechapter}%
+      \hspace{.8em}%
+      \rule{\midchapskip}{\beforechapskip}%
+    }%
+  }%
+  \makeoddfoot{plain}{}{}{\thepage}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Miscellaneous Environments and Macros}
+%
+% \begin{environment}{abstract}
+%   Create an abstract environment to consistently typeset abstracts
+%   in papers.
+%    \begin{macrocode}
+\renewenvironment{abstract}{
+  \begingroup%
+  {\noindent\sffamily\bfseries Abstract\,}---%
+}{
+  \endgroup%
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \iffalse
+%</class>
+% \fi
+%
+% \subsection{Font Configuration}
+%
+%    \begin{macrocode}
+%<*berling>
+\defaultfontfeatures[Berling]{
+  Path = fonts/Berling PS/,
+  Extension = .pfb,
+  UprightFont    = bnr_____,
+  BoldFont       = bnb_____,
+  ItalicFont     = bni_____,
+  BoldItalicFont = bnbi____,
+}
+%</berling>
+%
+%<*gill>
+\defaultfontfeatures[GillAltOneMT]{
+  Path = fonts/Gill PS/,
+  Extension = .pfb,
+  UprightFont    = gla_____,
+  BoldFont       = glab____,
+  ItalicFont     = glai____,
+  BoldItalicFont = glabi___,
+}
+%</gill>
+%
+%<*gillbook>
+\defaultfontfeatures[GillAltOneMTBook]{
+  Path = fonts/Gill PS/,
+  Extension = .pfb,
+  UprightFont = glak____,
+  ItalicFont  = glaki___,
+}
+%</gillbook>
+%
+%<*gillheavy>
+\defaultfontfeatures[GillAltOneMTHeavy]{
+  Path = fonts/Gill PS/,
+  Extension = .pfb,
+  UprightFont = glah____,
+  ItalicFont  = glahi___,
+}
+%</gillheavy>
+%
+%<*gilllight>
+\defaultfontfeatures[GillAltOneMTLight]{
+  Path = fonts/Gill PS/,
+  Extension = .pfb,
+  UprightFont = glal____,
+  ItalicFont  = glali___,
+}
+%</gilllight>
+%
+%    \end{macrocode}
+%
+% \Finale
+\endinput
+
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%

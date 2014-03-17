@@ -1,0 +1,97 @@
+\documentclass{uuthesis}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage[bibencoding=ascii,backend=bibtex8]{biblatex}
+
+\title{Cool Stuff:\texorpdfstring{\\}{ }
+  Things I Find Interesting}%
+\author{Andreas Sandberg}
+
+\addbibresource{demo.bib}
+
+\begin{document}
+
+\frontmatter
+% Placeholder for half-title page
+\begin{placeholderpage}
+  {\noindent\HUGE\sffamily \thetitle}\bigskip\\
+  {\noindent\LARGE\sffamily \theauthor}
+\end{placeholderpage}
+
+% Abstract
+\begin{placeholderpage}
+  \begin{abstract}
+    \lipsum[1-2]
+  \end{abstract}
+\end{placeholderpage}
+
+\begin{dedication}
+  Dedication
+\end{dedication}
+
+\cleartorecto
+
+\chapter*{List of Papers}
+This thesis is based on the following papers, which are referred to in
+the text by their Roman numerals:
+\begin{paperlist}
+  \paper{sandberg_reducing_2010}{%
+    I'm the primary author of this paper. David Eklöv contributed to
+    discussions and ran initial simulations.
+    %
+  }%
+\end{paperlist}
+\clearpage
+
+\tableofcontents*
+
+\chapter{List of Abbreviations}
+\lipsum[3-4]
+
+\mainmatter
+\chapter{Introduction}
+\lipsum[5-6]
+
+\chapter{Summary}
+
+\chapter{Svensk Sammanfattning}
+\lipsum[5-6]
+
+\chapter{Acknowledgments}
+\lipsum[5-6]
+
+\midsloppy
+\printbibliography[heading=bibintoc]
+\fussy
+
+\papers
+
+\paper{%
+  Reducing Cache Pollution Through Detection and Elimination of
+  Non-Temporal Memory Accesses%
+}{%
+  Reducing Cache Pollution\ldots%
+}{%
+  Andreas~Sandberg\\
+  David~Eklöv\\
+  Erik~Hagersten%
+}{%
+  \copyright 2010 IEEE. %
+  Reprinted, with permission, from \textit{SC'10}, November 13--19, 2010.%
+}
+\label{pap:pfnta}
+
+\begin{abstract}
+  \lipsum
+\end{abstract}
+
+\section{Introduction}
+\lipsum
+Foo~\cite{sandberg_efficient_2012}.
+
+\section*{Bibliography}
+\midsloppy
+\printbibliography[heading=none]
+\fussy
+
+\end{document}

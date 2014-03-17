@@ -1,0 +1,17 @@
+auto
+*~
+*-blx.bib
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.cls
+*.fontspec
+*.glo
+*.hd
+*.idx
+*.log
+*.out
+*.pdf
+*.toc
+*.xml
