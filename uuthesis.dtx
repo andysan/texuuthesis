@@ -58,6 +58,8 @@
 
 \newcommand{\DescribeOpt}{\DescribeMacro}
 \DocInput{\jobname.dtx}
+\PrintChanges
+\PrintIndex
 \end{document}
 %</driver>
 %
@@ -65,21 +67,93 @@
 %
 % \CheckSum{0}
 %
-%
+%^^A ------------------------------------------------------------
+%^^A Change log
+%^^A ------------------------------------------------------------
 % \changes{v0.1}{2014/03/17}{First public release}
 %
-% \GetFileInfo{\jobname.cls}
 %
-% \title{^^A
-% The Unofficial Uppsala University Thesis Class\\
-% --
-% Version \fileversion}
+%^^A ------------------------------------------------------------
+%^^A Index overrides
+%^^A ------------------------------------------------------------
+%
+% \DoNotIndex{\ClassError, \ClassWarning}
+% \DoNotIndex{\CurrentOption, \DeclareOption, \PassOptionsToClass}
+% \DoNotIndex{\LoadClass, \RequirePackage}
+% \DoNotIndex{\AtBeginDocument}
+%
+% \DoNotIndex{\,, \\, \", \{, \} }
+% \DoNotIndex{\begin, \end, \begingroup, \endgroup}
+% \DoNotIndex{\if, \ifx, \else, \fi, \newif, \notblank}
+% \DoNotIndex{\undefined}
+% \DoNotIndex{\def, \let}
+% \DoNotIndex{\g@addto@macro}
+% \DoNotIndex{\newcommand, \renewcommand, \newenvironment, \renewenvironment}
+% \DoNotIndex{\addtocounter, \newcounter, \refstepcounter, \stepcounter}
+% \DoNotIndex{\thechapter, \thefigure, \thepage, \thesection, \thetable}
+% \DoNotIndex{\arabic, \Roman, \roman}
+% \DoNotIndex{\addtolength}
+% \DoNotIndex{\makebox}
+% \DoNotIndex{\MakeUppercase}
+% \DoNotIndex{\par}
+% \DoNotIndex{\relax}
+% \DoNotIndex{\textwidth}
+%
+% \DoNotIndex{\directlua, }
+%
+% \DoNotIndex{\hyper@@anchor}
+%
+% \DoNotIndex{\noindent, \flushright, \raggedright, \endflushright}
+% \DoNotIndex{\hspace, \vfill, \vskip, \vspace}
+% \DoNotIndex{\enumerate, \endenumerate, \item, \labelenumi}
+%
+% \DoNotIndex{\chapter, \section, \subsection, \subsubsection, \paragraph}
+%
+% \DoNotIndex{\cite, \fullcite, \newrefsection}
+%
+% \DoNotIndex{\defaultfontfeatures}
+% \DoNotIndex{\@setfontsize, \setmainfont, \setsansfont}
+% \DoNotIndex{\fontsec, \normalfont}
+% \DoNotIndex{\upshape, \itshape, \slshape, \scshape}
+% \DoNotIndex{\bfseries, \mdseries}
+% \DoNotIndex{\sffamily, \rmfamily, \ttfamily}
+% \DoNotIndex{\textmd, \textsf}
+% \DoNotIndex{\tiny, \scriptsize, \footnotesize, \small, \normalsize}
+% \DoNotIndex{\large, \Large, \LARGE, \huge, \Huge, \HUGE}
+% \DoNotIndex{\baselineskip}
+%
+% \DoNotIndex{\checkandfixthelayout}
+% \DoNotIndex{\setlrmargins, \setmarginnotes, \settrims, \settrimmedsize}
+% \DoNotIndex{\settypeblocksize, \setulmargins}
+% \DoNotIndex{\fussy, \midsloppy, \sloppy}
+% \DoNotIndex{\quarkmarks}
+%
+% \DoNotIndex{\cleartorecto, \cleartoverso, \newpage}
+% \DoNotIndex{\openright}
+%
+% \DoNotIndex{\headstyles, \makeevenfoot, \makeevenhead, \makeheadstyles}
+% \DoNotIndex{\aliaspagestyle, \makepagestyle, \pagestyle, \thispagestyle}
+% \DoNotIndex{\chapterstyle, \makechapterstyle}
+% \DoNotIndex{\chapterheadstart, \chaptername, \chapternamenum}
+% \DoNotIndex{\chapnamefont, \chapnumfont, \chaptitlefont}
+% \DoNotIndex{\afterchapskip, \afterchapternum, \beforechapskip, \midchapskip}
+%
+% \DoNotIndex{\captionsswedish}
+%
+%^^A ------------------------------------------------------------
+%^^A Documentation Start
+%^^A ------------------------------------------------------------
+%
+% \title{An Unofficial Uppsala University Thesis Class}
 % \author{^^A
 %   Andreas Sandberg\\ \texttt{andreas@sandberg.pp.se}^^A
 % }
-% \date{\filedate}
+% \date{}
 % \maketitle
 %
+% \tableofcontents
+%
+% \newpage
 % \section{Introduction}
 % This is the unofficial Uppsala University thesis class for
 % \LaTeX. Unlike the official class, this class builds on the
@@ -186,12 +260,6 @@
 %
 % Copy the directories |Berling PS| and |Gill PS| to your thesis
 % directory. \LuaLaTeX{} should now be able to find the font files.
-%
-%
-%\StopEventually{^^A
-%  \PrintChanges
-%  \PrintIndex
-%}
 %
 % \section{Implementation}
 %\iffalse
