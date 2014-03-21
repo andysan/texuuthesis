@@ -723,12 +723,18 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
   %
   % section
   \setsecheadstyle{\uut@secstyle\Large}%
+  \setbeforesecskip{4.0ex \@plus 3ex \@minus 0.7ex}
+  \setaftersecskip{2.3ex \@plus 0.2ex}
   %
   % subsection
   \setsubsecheadstyle{\uut@secstyle\large}%
+  \setbeforesubsecskip{3.5ex \@plus 1ex \@minus 0.5ex}
+  \setaftersubsecskip{1.5ex \@plus 0.5ex}
   %
   % subsubsection
   \setsubsubsecheadstyle{\uut@secstyle\normalsize}%
+  \setbeforesubsecskip{3.5ex \@plus 1ex \@minus 0.5ex}
+  \setaftersubsubsecskip{1.5ex \@plus 0.5ex}
   %
   % paragraph
   \setparaheadstyle{\normalfont\normalsize\bfseries\uut@addsuffix{:
@@ -744,6 +750,18 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 %    \begin{macrocode}
 \pagestyle{uut}
 \headstyles{uut}
+%    \end{macrocode}
+%
+% Allow more stretch before and after figures and captions. This makes
+% it easier for \TeX{} to avoid ugly page breaks.
+%    \begin{macrocode}
+\setlength{\abovecaptionskip}{%
+  0.5\onelineskip \@plus 0.5\onelineskip}
+\setlength{\belowcaptionskip}{%
+  0.5\onelineskip \@plus 2.5\onelineskip \@minus 0.5\onelineskip}
+\setlength{\subfloattopskip}{5pt \@plus 5pt}
+\setlength{\subfloatbottomskip}{5pt \@plus 5pt}
+\setlength{\subfloatcapskip}{0pt \@plus 2.5pt}
 %    \end{macrocode}
 %
 % \subsubsection{Placeholder Pages}
