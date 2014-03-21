@@ -231,11 +231,15 @@
 %
 % \section{Typesetting Paper Lists}
 % \DescribeEnv{paperlist}%
+% \DescribeEnv{paperlist*}%
 % \DescribeMacro{paper}%
-% A comprehensive summary normally contains a list of papers. This
-% class contains provides a simple way of typesetting such a list. The
-% macro |\paper| is defined within the environment. Calling this macro
-% causes a bibliography entry to be printed. The macro takes cite key
+% A comprehensive summary normally contains one or more lists of
+% papers. This class contains provides two environments to typeset
+% such a list. The |paperlist| environment produces an ordered list
+% with roman numerals while the |paperlist*| environment produces an
+% unordered list. Individual papers are typset using the |\paper|
+% macro is defined within the environments. Calling this macro causes
+% a bibliography entry to be printed. The macro takes cite key
 % and an optional participation as its arguments: \\
 % |\paper|~\marg{cite~key}~\oarg{participation}
 %
@@ -705,37 +709,51 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 % \subsection{Typesetting Paper Lists}
 %
 % \begin{environment}{paperlist}
+% \begin{environment}{paperlist*}
+% \begin{macro}{uut@paperitem}
 % \begin{macro}{paper}
-%   Put explanation of |paperlist|'s implementation here.
+%   Provide environments to typeset ordered paper lists (|paperlist|)
+%   and un-ordered (|paperlist*|) paper lists. These environments are
+%   typically used in a list of papers section.
+%
+%   We use sloppy spacing to avoid major ugliness when setting the
+%   bibliography entries.
 %
 %    \begin{macrocode}
+\newcommand{\uut@paperitem}[2]{%
+  \midsloppy\item \fullcite{#1}%
+  \notblank{#2}{%
+    \begingroup%
+    \fussy%
+    \itshape%
+    \smallskip\\%
+    #2%
+    \endgroup%
+  }{}%
+}
+
 \newenvironment{paperlist}{
   \begingroup
-  % We need to use sloppy spacing to avoid major ugliness when setting
-  % the bibliography entries.
-  \midsloppy
-  % Define a paper macro that is only valid in the paperlist. The
-  % paper macro takes two parameters, the name of the paper in the
-  % bibliography and comments on participation.
-  \def\paper##1##2{%
-    \item \fullcite{##1}%
-      \notblank{##2}{%
-        \begingroup%
-        \fussy
-        \itshape%
-        \smallskip\\%
-        ##2
-        \endgroup%
-      }{}
-  } %
+  \def\paper{\uut@paperitem}
   \enumerate
   \renewcommand{\labelenumi}{\Roman{enumi}.~}
 }{%
   \endenumerate
   \endgroup
 }
+
+\newenvironment{paperlist*}{
+  \begingroup
+  \def\paper{\uut@paperitem}
+  \itemize
+}{%
+  \enditemize
+  \endgroup
+}
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
+% \end{environment}
 % \end{environment}
 %
 %
