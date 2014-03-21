@@ -581,7 +581,20 @@
 % \end{macro}
 % \end{macro}
 %
+% Use Gill Alt One MT for captions in floats (e.g., ``Figure'') and
+% Gill Alt One MT Book for the actual text in the caption. The
+% original Gill font looks a bit too dark in contrast with the body
+% text in Berling, but it makes the caption name stand out nicely.
+%    \begin{macrocode}
+\captionnamefont{\small\gill\mdseries\upshape}
+\captiontitlefont{\small\gillbook\mdseries\upshape}
+\captionstyle{}
+\captiondelim{: }
 
+\subcaptionsize{}
+\subcaptionlabelfont{\small\gill\mdseries\upshape}
+\subcaptionfont{\small\gillbook\mdseries\upshape}
+%    \end{macrocode}
 %
 % \subsubsection{Default Style}
 %    \begin{macrocode}
