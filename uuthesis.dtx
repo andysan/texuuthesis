@@ -101,8 +101,6 @@
 %
 % \DoNotIndex{\directlua, }
 %
-% \DoNotIndex{\hyper@@anchor}
-%
 % \DoNotIndex{\noindent, \flushright, \raggedright, \endflushright}
 % \DoNotIndex{\hspace, \vfill, \vskip, \vspace}
 % \DoNotIndex{\enumerate, \endenumerate, \item, \labelenumi}
@@ -456,7 +454,7 @@
 \setlrmargins{22.5mm}{*}{*}
 \setulmargins{18mm}{*}{*}
 \setheaderspaces{*}{\onelineskip}{*}
-\setheadfoot{\onelineskip}{26pt}
+\setheadfoot{\onelineskip}{2\onelineskip}
 \setmarginnotes{1mm}{20mm}{5pt}
 \checkandfixthelayout
 %    \end{macrocode}
@@ -487,10 +485,10 @@
 \fi%
 
 \AtBeginDocument{%
-  \ifx \hyper@@anchor \undefined%
-  \else%
-  \uut@setuppdfbox
-  \fi%
+  \@ifpackageloaded{hyperref}{%
+    \uut@setuppdfbox%
+  }{%
+  }%
 }%
 %    \end{macrocode}
 %
@@ -882,7 +880,7 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
   % Start a new reference section if biblatex is loaded.
   \ifx\newrefsection\uut@undefined
   \else
-  \newrefsection
+  \newrefsection%
   \fi
 }
 %    \end{macrocode}
