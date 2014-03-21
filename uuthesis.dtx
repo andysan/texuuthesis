@@ -195,11 +195,14 @@
 % drafts and pre-prints of a thesis using a normal office printer.
 %
 % \DescribeOpt{trim}%
-% Trim the paper to S5. Activating this option disables trim
-% marks and sets up a crop box around the resulting S5 page to cause
-% PDF readers to display the crop the generated A4 pages to S5. The
-% resulting PDF will contain the same bleed box and trim box
-% irregardless of this option.
+% \DescribeMacro{\revisioninfo}%
+% Trim the paper to S5. Activating this option disables trim marks and
+% sets up a crop box around the resulting S5 page to cause PDF readers
+% to display the crop the generated A4 pages to S5. The resulting PDF
+% will contain the same bleed box and trim box irregardless of this
+% option. Users wishing to print revision information (e.g., from git)
+% should overload the |\revisioninfo| macro whose contents is
+% displayed in the lower right corner of the sheet.
 %
 % \DescribeOpt{final}%
 % Configure the class for print output. This disables debug features
@@ -440,7 +443,6 @@
   }%
 }
 \else%
-\quarkmarks
 \newcommand{\uut@setuppdfbox}{
   \pdfpageattr{
     /MediaBox [0 0 595.28 841.89]
@@ -456,6 +458,50 @@
   \uut@setuppdfbox
   \fi%
 }%
+%    \end{macrocode}
+%
+% \subsection{Trim marks}
+% \begin{macro}{revisioninfo}
+% \begin{macro}{uutrimmarks}
+%   Setup trimmarks based on |\quarkmarks|, but add a hook to display
+%   revision control information at the bottom and display the sheet
+%   number at the top.
+%    \begin{macrocode}
+\newcommand{\revisioninfo}{}
+
+\newcommand{\uuttrimmarks}{%
+  \quarkmarks
+
+  \g@addto@macro\tmarktr{%
+    \begin{picture}(0,0)%
+      \put(-3,27){%
+        \makebox[0pt][r]{
+          \normalfont\ttfamily\fontsize{8bp}{10bp}\selectfont%
+          Sheet: \thesheetsequence\ of \thelastsheet%
+        }
+      }%
+    \end{picture}
+  }
+
+  \g@addto@macro\tmarkbl{%
+    \begin{picture}(0,0)%
+      \put(0,-50){%
+        \normalfont\ttfamily\fontsize{8bp}{10bp}\selectfont%
+        \revisioninfo%
+      }%
+    \end{picture}%
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% Enable trim marks by default when when not trimmed.
+%    \begin{macrocode}
+\iftrimmed
+\else
+\uuttrimmarks
+\fi
 %    \end{macrocode}
 %
 % \subsection{Setup Fonts}
