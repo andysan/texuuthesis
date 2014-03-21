@@ -335,6 +335,17 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\ifuut@sloppybottom}
+%   Enable a sloppy bottom in memoir and set higher penalties for
+%   widows and orphans. This also adjusts the margins to prevent the
+%   text block from hitting the pagination when additional lines are
+%   crammed into the text block to prevent a
+%   widow/orphan. Default:~|false|
+%    \begin{macrocode}
+\newif\ifuut@sloppybottom\uut@sloppybottomfalse
+%    \end{macrocode}
+% \end{macro}
+%
 %    \begin{macrocode}
 \DeclareOption{final}{
   \PassOptionsToClass{\CurrentOption}{memoir}
@@ -357,6 +368,10 @@
 
 \DeclareOption{air}{
   \uut@airtrue
+}
+
+\DeclareOption{sloppybottom}{
+  \uut@sloppybottomtrue
 }
 
 \DeclareOption*{
@@ -443,8 +458,11 @@
 %
 % Setup type block and margins. The official typeblock is normally
 % 572pt high, but we adjust it slightly since we use 11pt topskip
-% instead of 13pt to maintain a 43 line type block. 
-%
+% instead of 13pt to maintain a 43 line type block. We need to
+% decrease the top margin slightly and move the type block when using
+% the sloppy bottom feature. This prevents sloppy bottom overflows
+% from ``hitting'' the pagination (causing major ugliness in the
+% process).
 %    \begin{macrocode}
 \ifuut@air
 \settypeblocksize{565.4pt}{120mm}{*}
@@ -452,12 +470,29 @@
 \settypeblocksize{570pt}{120mm}{*}
 \fi
 \setlrmargins{22.5mm}{*}{*}
+\ifuut@sloppybottom
+\setulmargins{15mm}{*}{*}
+\else
 \setulmargins{18mm}{*}{*}
+\fi
 \setheaderspaces{*}{\onelineskip}{*}
 \setheadfoot{\onelineskip}{2\onelineskip}
 \setmarginnotes{1mm}{20mm}{5pt}
 \checkandfixthelayout
 %    \end{macrocode}
+%
+% Prevent orphans and widows by making their penalty really high and
+% enable the sloppy bottom feature of the memoir class.
+%    \begin{macrocode}
+\ifuut@sloppybottom
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+
+\sloppybottom
+\fi
+%    \end{macrocode}
+
 %
 % Setup PDF metadata to let the print shop know where to trim the page
 % (|TrimBox|) and how much bleed to print (|BleedBox|). Set the
