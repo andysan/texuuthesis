@@ -260,6 +260,36 @@
 % should be called as follows:\\
 % |\paper|~\marg{title}~\marg{short~title}~\marg{authors}~\marg{copyright}
 %
+% \subsection{Using Fonts}
+% The class will automatically create macros to switch to fonts from
+% the University's typographic profile if the class option |altfonts|
+% has been specified.
+%
+% \DescribeMacro{\berling}%
+% This is an official font from the typographic profile of the
+% university. Its prescribed use is in the body of a larger text.
+%
+% \DescribeMacro{\gill}%
+% This macro switches ``Gill Alt One MT''. This is the official sans
+% serif font from the typographic profile of the university. Its
+% prescribed use is in figure headings, texts, short fact boxes,
+% diagrams, and pagination.
+%
+% \DescribeMacro{\gillheavy}%
+% This macro switches ``Gill Alt One MT Heavy''. This is not a part of the
+% official typographic profile.
+%
+% \DescribeMacro{\gilllight}%
+% This macro switches ``Gill Alt One MT Light''. This is not a part of
+% the official typographic profile.
+%
+% \DescribeMacro{\gillbook}%
+% This macro switches ``Gill Alt One MT Book''. This is not a part of
+% the official typographic profile. However, it matches Berling nicely
+% and might be a better choice for ``highlighting'' text in a body of
+% text set in Berling as Gill Alt One MT might stand out too much.
+%
+%
 % \subsection{Installing Fonts}
 % Download the university's font package from the university
 % website. Make sure to download the PC version. The file should be
@@ -509,28 +539,70 @@
 %    \end{macrocode}
 %
 % \subsection{Setup Fonts}
-% \begin{macro}{\uut@font@sec}
-% \begin{macro}{\uut@font@chapter}
-%   Setup font macros for sections and chapters based on the font
-%   requested.
+% \subsubsection{Alternative Style}
 %    \begin{macrocode}
 \ifuut@altfonts
+%    \end{macrocode}
+%
+%   Setup font macros for sections and chapters based on the font
+%   requested. Setup font aliases and ligatures if alternative fonts
+%   have been requested.
+%
+%   First, setup aliases for the fonts from the typographic profile
+%   and enable TeX ligatures by default.
+%    \begin{macrocode}
 \defaultfontfeatures{
   Ligatures = {TeX},
 }
 
+\newfontfamily\berling{Berling}
+\newfontfamily\gill{GillAltOneMT}
+\newfontfamily\gillheavy{GillAltOneMTHeavy}
+\newfontfamily\gilllight{GillAltOneMTLight}
+\newfontfamily\gillbook{GillAltOneMTBook}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \setmainfont{Berling}
 \setsansfont{GillAltOneMT}
-
-\newfontface\uut@font@sec{GillAltOneMTHeavy}
-\newfontface\uut@font@chapter{GillAltOneMTHeavy}
-\else
-\newcommand{\uut@font@sec}{\bfseries\sffamily}
-\newcommand{\uut@font@chapter}{\bfseries\sffamily}
-\fi
+%    \end{macrocode}
+%
+% \begin{macro}{\uut@font@sec}
+% \begin{macro}{\uut@font@chapter}
+%   Second, define aliases for the fonts we are going to use in
+%   sections and chapters,.
+%   \begin{macrocode}
+\newcommand{\uut@font@abstract}{\gill\bfseries}
+\newcommand{\uut@font@chapter}{\gill\bfseries}
+\newcommand{\uut@font@pagination}{\gillbook\mdseries\upshape}
+\newcommand{\uut@font@paper}{\gill}
+\newcommand{\uut@font@sec}{\gill\bfseries}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+%
+
+%
+% \subsubsection{Default Style}
+%    \begin{macrocode}
+\else
+%    \end{macrocode}
+%
+% \begin{macro}{\uut@font@sec}
+% \begin{macro}{\uut@font@chapter}
+%    \begin{macrocode}
+\newcommand{\uut@font@abstract}{\sffamily\bfseries}
+\newcommand{\uut@font@chapter}{\sffamily\bfseries}
+\newcommand{\uut@font@pagination}{\rmfamily\mdseries\upshape}
+\newcommand{\uut@font@paper}{\sffamily}
+\newcommand{\uut@font@sec}{\bfseries\sffamily}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%    \begin{macrocode}
+\fi
+%    \end{macrocode}
 %
 % \subsection{Draft Debug}
 % 
@@ -597,8 +669,8 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 % \begin{macro}{\ps@uut}
 %   Declare the default thesis page style.
 %    \begin{macrocode}
-\makepagestyle{uut} \makeevenfoot{uut}{\thepage}{}{}
-\makeoddfoot{uut}{}{}{\thepage}
+\makepagestyle{uut} \makeevenfoot{uut}{{\uut@font@pagination\thepage}}{}{}
+\makeoddfoot{uut}{}{}{{\uut@font@pagination\thepage}}
 %    \end{macrocode}
 
 % \end{macro}
@@ -618,7 +690,7 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 %    \begin{macrocode}
 \makechapterstyle{uut}{%
   \chapterstyle{section}
-  \renewcommand*{\chaptitlefont}{\sffamily\Huge}
+  \renewcommand*{\chaptitlefont}{\uut@font@chapter\Huge}
   \renewcommand*{\chapnumfont}{\chaptitlefont}
   \renewcommand*{\printchaptertitle}[1]{\chaptitlefont ##1}
   \renewcommand{\afterchapternum}{\hspace{12pt}}
@@ -831,8 +903,8 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
   \setlength{\afterchapskip}{40pt}
   \renewcommand*{\chapterheadstart}{\vspace*{20pt}}
   \renewcommand*{\afterchapternum}{\par\nobreak\vskip 25pt}
-  \renewcommand*{\chapnamefont}{\sffamily\LARGE\flushright}
-  \renewcommand*{\chapnumfont}{\sffamily\HUGE}
+  \renewcommand*{\chapnamefont}{\uut@font@paper\LARGE\flushright}
+  \renewcommand*{\chapnumfont}{\uut@font@paper\HUGE}
   \renewcommand*{\chaptitlefont}{\uut@font@chapter\HUGE\flushright}
   \renewcommand*{\printchaptername}{\chapnamefont\MakeUppercase{\chaptername}}
   \renewcommand*{\chapternamenum}{}
@@ -864,7 +936,7 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 %    \begin{macrocode}
 \renewenvironment{abstract}{
   \begingroup%
-  {\noindent\sffamily\bfseries Abstract\,}---%
+  {\noindent\uut@font@abstract Abstract\,}---%
 }{
   \endgroup%
 }
