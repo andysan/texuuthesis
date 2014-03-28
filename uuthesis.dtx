@@ -249,12 +249,11 @@
 %
 % \DescribeMacro{\papers}%
 % At the end of the comprehensive summary, the |\papers| command is
-% use to shift to paper production. This changes the chapter style and
-% to produce paper front pages.
+% use to shift to paper production.
 %
 % \DescribeMacro{\paper}%
-% Once the chapter style has been changed with the |\papers| command,
-% a paper heading can be created using the |\paper| macro. This macro
+% Once shifted to paper production mode with the |\papers| command, a
+% paper heading can be created using the |\paper| macro. This macro
 % should be called as follows:\\
 % |\paper|~\marg{title}~\marg{short~title}~\marg{authors}~\marg{copyright}
 %
@@ -897,38 +896,59 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 % \begin{macro}{\papers}
 % Put explanation of |\papers|'s implementation here.
 % \begin{macrocode}
+\newlength{\uut@paper@rule}
 \newcommand{\papers}{%
-  \chapterstyle{paper}
-  \openright
   \setsecnumdepth{section}
   \renewcommand\thesection{\arabic{section}}
   \renewcommand\thefigure{\arabic{figure}}
   \renewcommand\thetable{\arabic{table}}
+  %
+  \setlength{\uut@paper@rule}{\paperwidth}
+  \addtolength{\uut@paper@rule}{-\textwidth}
+  \addtolength{\uut@paper@rule}{-\spinemargin}
+  %
 }
 % \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\paper}
-%   Typeset a paper front page.
+%   Typeset a paper front page. We treat papers a bit like chapters
+%   and increase the chapter counter. This keeps hyperref happy.
 %
 %    \begin{macrocode}
 \newcommand{\paper}[4]{%
-  \cleartorecto
-  \stepcounter{paper}
-  \chapter[#1][#2]{#1}
-  \addtocounter{paper}{-1}
-  \refstepcounter{paper}
-  \vskip 24pt
-  % Authors
+  \cleartorecto%
+  \refstepcounter{paper}%
+  %
+  \thispagestyle{empty}%
   {%
-    \begin{center}%
-      \noindent\Large #3%
-    \end{center}%
-  }
-  \vfill
-  % Copyright
-  {\raggedright\noindent\textsf{\footnotesize #4}}
-  \thispagestyle{afterpart}
+    \parskip\z@%
+    \parindent\z@%
+    % Heading
+    {
+      \vspace*{20pt}%
+      \uut@font@paper\LARGE\flushright{}PAPER%
+      \makebox[0pt][l]{%
+        \hspace{.8em}%
+        \resizebox{!}{24pt}{\uut@font@paper\HUGE\thepaper}%
+        \hspace{.8em}%
+        \rule{\uut@paper@rule}{24pt}%
+      }%
+      \par%
+    }%
+    \vskip 25pt%
+    % Title
+    {\uut@font@chapter\HUGE\flushright #1\par}%
+    \vskip 60pt%
+    % Authors
+    {\uut@font@chapter\Large\centering #3\par}%
+    \vfill%
+    % Copyright
+    {\raggedright\noindent\sffamily\footnotesize #4}
+  }%
+  \addcontentsline{toc}{chapter}{%
+    \protect\chapternumberline{\thepaper}#1}%
+  \stepcounter{chapter}%
   \newpage
   % Start a new reference section if biblatex is loaded.
   \ifx\newrefsection\uut@undefined
@@ -939,12 +959,10 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\chs@paper}
 % \begin{macro}{\c@paper}
 % \begin{macro}{\thepaper}
 % \begin{macro}{\papername}
 %    \begin{macrocode}
-% Chapter style for papers.
 %
 % Setup a paper counter so we can reference the paper later.
 \newcounter{paper}
@@ -959,35 +977,7 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
   }%
   \fi%
 }%
-% Define the actual paper style
-\makechapterstyle{paper}{%
-  \renewcommand*{\chaptername}{Paper}
-  \renewcommand*{\thechapter}{\Roman{paper}}
-
-  \setlength{\afterchapskip}{40pt}
-  \renewcommand*{\chapterheadstart}{\vspace*{20pt}}
-  \renewcommand*{\afterchapternum}{\par\nobreak\vskip 25pt}
-  \renewcommand*{\chapnamefont}{\uut@font@paper\LARGE\flushright}
-  \renewcommand*{\chapnumfont}{\uut@font@paper\HUGE}
-  \renewcommand*{\chaptitlefont}{\uut@font@chapter\HUGE\flushright}
-  \renewcommand*{\printchaptername}{\chapnamefont\MakeUppercase{\chaptername}}
-  \renewcommand*{\chapternamenum}{}
-  \setlength{\beforechapskip}{24pt}
-  \setlength{\midchapskip}{\paperwidth}
-  \addtolength{\midchapskip}{-\textwidth}
-  \addtolength{\midchapskip}{-\spinemargin}
-  \renewcommand*{\printchapternum}{%
-    \makebox[0pt][l]{%
-      \hspace{.8em}%
-      \resizebox{!}{\beforechapskip}{\chapnumfont \thechapter}%
-      \hspace{.8em}%
-      \rule{\midchapskip}{\beforechapskip}%
-    }%
-  }%
-  \makeoddfoot{plain}{}{}{\thepage}%
-}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
