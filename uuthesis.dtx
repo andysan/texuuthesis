@@ -924,10 +924,11 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
     % Heading
     {
       \vspace*{20pt}%
-      \uut@font@paper\LARGE\flushright{}PAPER%
+      \flushright%
+      \uut@font@paper\LARGE{}PAPER%
+      \hspace{.8em}%
+      \resizebox{!}{24pt}{\uut@font@paper\HUGE\thepaper}%
       \makebox[0pt][l]{%
-        \hspace{.8em}%
-        \resizebox{!}{24pt}{\uut@font@paper\HUGE\thepaper}%
         \hspace{.8em}%
         \rule{\uut@paper@rule}{24pt}%
       }%
