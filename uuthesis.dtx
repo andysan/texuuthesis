@@ -255,7 +255,7 @@
 % Once shifted to paper production mode with the |\papers| command, a
 % paper heading can be created using the |\paper| macro. This macro
 % should be called as follows:\\
-% |\paper|~\marg{title}~\marg{short~title}~\marg{authors}~\marg{copyright}
+% |\paper|~\marg{title}~\marg{authors}~\marg{copyright}
 %
 % \subsection{Using Fonts}
 % The class will automatically create macros to switch to fonts from
@@ -909,7 +909,7 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
 %   and increase the chapter counter. This keeps hyperref happy.
 %
 %    \begin{macrocode}
-\newcommand{\paper}[4]{%
+\newcommand{\paper}[3]{%
   \cleartorecto%
   \refstepcounter{paper}%
   %
@@ -935,10 +935,10 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
     {\uut@font@chapter\HUGE\flushright #1\par}%
     \vskip 60pt%
     % Authors
-    {\uut@font@chapter\Large\centering #3\par}%
+    {\uut@font@chapter\Large\centering #2\par}%
     \vfill%
     % Copyright
-    {\raggedright\noindent\sffamily\footnotesize #4}
+    {\raggedright\noindent\sffamily\footnotesize #3}
   }%
   \addcontentsline{toc}{chapter}{%
     \protect\chapternumberline{\thepaper}#1}%
