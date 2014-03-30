@@ -66,6 +66,10 @@ the text by their Roman numerals:
 
 \papers
 
+\newcommand{\paperdoi}[1]{%
+  DOI: \href{http://dx.doi.org/#1}{\texttt{#1}}
+}
+
 \paper{%
   Reducing Cache Pollution Through Detection and Elimination of
   Non-Temporal Memory Accesses%
@@ -75,7 +79,8 @@ the text by their Roman numerals:
   Erik~Hagersten%
 }{%
   \copyright 2010 IEEE. %
-  Reprinted, with permission, from \textit{SC'10}, November 13--19, 2010.%
+  Reprinted, with permission, from \textit{SC'10}, November 13--19, 2010.\\
+  \paperdoi{10.1109/SC.2010.44}%
 }
 \label{pap:pfnta}
 
@@ -91,5 +96,40 @@ Foo~\cite{sandberg_efficient_2012}.
 \midsloppy
 \printbibliography[heading=none]
 \fussy
+
+
+\paper{%
+  Towards Cool and Interesting Methods in Computer Science%
+}{%
+  Author McAuthor\\
+  Sven Svensson\\
+  John Doe\\
+  Jane Doe%
+}{%
+  Foo Bar Baz%
+}
+
+\paper{%
+  Things I Thought the World Should Know%
+}{%
+  Author McAuthor\\
+  Sven Svensson\\
+  John Doe\\
+  Jane Doe%
+}{%
+  Foo Bar Baz%
+}
+
+\paper{%
+  Yet Another Paper: Is This the Last One?\\
+  On Random Ideas
+}{%
+  Author McAuthor\\
+  Sven Svensson\\
+  John Doe\\
+  Jane Doe%
+}{%
+  Foo Bar Baz%
+}
 
 \end{document}
