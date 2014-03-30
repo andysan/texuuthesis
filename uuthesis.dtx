@@ -600,7 +600,8 @@
 \newcommand{\uut@font@abstract}{\gill\bfseries}
 \newcommand{\uut@font@chapter}{\gill}
 \newcommand{\uut@font@pagination}{\gillbook\mdseries\upshape}
-\newcommand{\uut@font@paper}{\gill}
+\newcommand{\uut@font@paper}{\gill\huge}
+\newcommand{\uut@font@paperno}{\gill\HUGE}
 \newcommand{\uut@font@sec}{\gill}
 %    \end{macrocode}
 % \end{macro}
@@ -632,7 +633,8 @@
 \newcommand{\uut@font@abstract}{\sffamily\bfseries}
 \newcommand{\uut@font@chapter}{\sffamily\bfseries}
 \newcommand{\uut@font@pagination}{\rmfamily\mdseries\upshape}
-\newcommand{\uut@font@paper}{\sffamily}
+\newcommand{\uut@font@paper}{\sffamily\huge\bfseries}
+\newcommand{\uut@font@paperno}{\sffamily\HUGE}
 \newcommand{\uut@font@sec}{\bfseries\sffamily}
 %    \end{macrocode}
 % \end{macro}
@@ -921,12 +923,17 @@ luatexbase.add_to_callback("post_linebreak_filter",magentabox,"magentabox")
     {
       \vspace*{20pt}%
       \flushright%
-      \uut@font@paper\LARGE{}PAPER%
-      \hspace{.8em}%
-      \resizebox{!}{24pt}{\uut@font@paper\HUGE\thepaper}%
+      \uut@font@paper%
+      PAPER%
+      \hspace{.4em}%
+      \resizebox{!}{25pt}{{\uut@font@paperno\thepaper}}%
+      % Shift everything slightly into the right margin to make the
+      % paper number look aligned with the title.
+      \hspace{-0.07em}%
       \makebox[0pt][l]{%
-        \hspace{.8em}%
-        \rule{\uut@paper@rule}{24pt}%
+        \hspace{0.07em}%
+        \hspace{.4em}%
+        \rule{\uut@paper@rule}{25pt}%
       }%
       \par%
     }%
